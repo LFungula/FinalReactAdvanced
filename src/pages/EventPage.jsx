@@ -6,15 +6,6 @@ export const EventPage = ({ event }) => {
   const [Users, setUsers] = useState([]);
 
   useEffect(() => {
-    async function fetchAllCategories() {
-      const response = await fetch(`http://localhost:3000/categories`);
-      const allCategories = await response.json();
-      setCategories(allCategories);
-    }
-    fetchAllCategories();
-  }, []);
-
-  useEffect(() => {
     async function fetchAllUsers() {
       const response = await fetch(`http://localhost:3000/users`);
       const allUsers = await response.json();
@@ -23,20 +14,30 @@ export const EventPage = ({ event }) => {
     fetchAllUsers();
   }, []);
 
-  const getUserName = (userID, userList) => {
-    const user = userList.find((user) => user.id === userID);
+  useEffect(() => {
+    async function fetchAllCategories() {
+      const response = await fetch(`http://localhost:3000/categories`);
+      const allCategories = await response.json();
+      setCategories(allCategories);
+    }
+    fetchAllCategories();
+  }, []);
+
+  const getUserName = () => {
+    const user = Users.find((user) => user.id === event.createdBy);
     return user ? user.name : "User not registerd";
   };
 
-  const getCathegory = (categoryID, categoryList) => {
-    const category = categoryList.find(
-      (category) => category.id === categoryID
-    );
-    return category ? category.name : "Category not listed";
+  const getCategories = () => {
+    const categoryNames = event.categoryIds.map((id) => {
+      const category = Categories.find((category) => category.id === id);
+      return category ? category.name : "Category not listed";
+    });
+    return categoryNames;
   };
 
-  const userName = getUserName(event.createdBy, Users);
-  const categoryName = getCathegory(event.categoryIds, Categories);
+  const userName = getUserName();
+  const categoryName = getCategories();
 
   return (
     <>
@@ -45,8 +46,8 @@ export const EventPage = ({ event }) => {
         <p>by {userName}</p>
         <img src={event.image} width="25%" />
         <p>
-          {event.categoryIds.map((category) => (
-            <li key={category}>{category}</li>
+          {categoryName.map((name, index) => (
+            <li key={index}>{name} </li>
           ))}
         </p>
         <p> location: {event.location} </p>

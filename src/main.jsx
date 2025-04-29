@@ -3,6 +3,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { EventPage } from "./pages/EventPage";
 import { EventsPage } from "./pages/EventsPage";
+import { AddNewEventPage } from "./pages/AddNewEventPage";
+import { Users } from "./pages/Users";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 
@@ -14,14 +16,19 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <EventsPage />,
-        // loader: postListLoader,
+      },
+
+      {
+        path: `/event/:eventId`,
+        element: <EventPage />,
       },
       {
-        path: "/event/:eventId",
-        element: <EventPage />,
-
-        // loader: postLoader,
-        // action: addComment,
+        path: "/event/new",
+        element: <AddNewEventPage />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
       },
     ],
   },
