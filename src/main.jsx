@@ -1,11 +1,13 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { EventPage } from "./pages/EventPage";
-import { EventsPage } from "./pages/EventsPage";
+import { EventPage, loader as eventPageLoader } from "./pages/EventPage";
+import { EventsPage, loader as eventsPageLoader } from "./pages/EventsPage";
 import { AddNewEventPage } from "./pages/AddNewEventPage";
-import { Users } from "./pages/Users";
+import { Users, loader as usersLoader } from "./pages/Users";
+import { UserPage, loader as userPageLoader } from "./pages/UserPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import { Root } from "./components/Root";
 
 const router = createBrowserRouter([
@@ -16,11 +18,13 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <EventsPage />,
+        loader: eventsPageLoader,
       },
 
       {
-        path: `/event/:eventId`,
+        path: "/event/:eventId",
         element: <EventPage />,
+        loader: eventPageLoader,
       },
       {
         path: "/event/new",
@@ -29,6 +33,12 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <Users />,
+        loader: usersLoader,
+      },
+      {
+        path: "users/user/:userId",
+        element: <UserPage />,
+        loader: userPageLoader,
       },
     ],
   },

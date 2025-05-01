@@ -1,36 +1,29 @@
-import React, { useEffect, useState } from "react";
 import { Heading } from "@chakra-ui/react";
+import { Link, useLoaderData } from "react-router-dom";
 
-export const EventPage = ({ event }) => {
-  const [Categories, setCategories] = useState([]);
-  const [Users, setUsers] = useState([]);
+export const loader = async ({ params }) => {
+  const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
+  const users = await fetch(`http://localhost:3000/users`);
+  const categories = await fetch(`http://localhost:3000/categories`);
 
-  useEffect(() => {
-    async function fetchAllUsers() {
-      const response = await fetch(`http://localhost:3000/users`);
-      const allUsers = await response.json();
-      setUsers(allUsers);
-    }
-    fetchAllUsers();
-  }, []);
+  return {
+    event: await event.json(),
+    users: await users.json(),
+    categories: await categories.json(),
+  };
+};
 
-  useEffect(() => {
-    async function fetchAllCategories() {
-      const response = await fetch(`http://localhost:3000/categories`);
-      const allCategories = await response.json();
-      setCategories(allCategories);
-    }
-    fetchAllCategories();
-  }, []);
+export const EventPage = () => {
+  const { event, users, categories } = useLoaderData();
 
   const getUserName = () => {
-    const user = Users.find((user) => user.id === event.createdBy);
+    const user = users.find((user) => user.id === event.createdBy);
     return user ? user.name : "User not registerd";
   };
 
   const getCategories = () => {
     const categoryNames = event.categoryIds.map((id) => {
-      const category = Categories.find((category) => category.id === id);
+      const category = categories.find((category) => category.id === id);
       return category ? category.name : "Category not listed";
     });
     return categoryNames;
@@ -43,7 +36,7 @@ export const EventPage = ({ event }) => {
     <>
       <Heading>{event.title} </Heading>
       <div>
-        <p>by {userName}</p>
+        <Link to={`/users/user/${event.createdBy}`}>by {userName}</Link>
         <img src={event.image} width="25%" />
         <p>
           {categoryName.map((name, index) => (

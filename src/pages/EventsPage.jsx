@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from "react";
 import { Heading } from "@chakra-ui/react";
-import { EventPage } from "./EventPage";
+import { Link, useLoaderData } from "react-router-dom";
+
+export const loader = async () => {
+  const response = await fetch("http://localhost:3000/events");
+  return { events: await response.json() };
+};
 
 export const EventsPage = () => {
-  const [events, setEvents] = useState([]);
-  const [eventChoice, setEventChoice] = useState("");
+  const { events } = useLoaderData();
 
-  useEffect(() => {
-    async function fetchAllEvents() {
-      const response = await fetch("http://localhost:3000/events");
-      const allEvents = await response.json();
-      setEvents(allEvents);
-    }
-    fetchAllEvents();
-  }, []);
-
-  return eventChoice ? (
-    <EventPage event={eventChoice} />
-  ) : (
+  return (
     <>
       <Heading>List of events</Heading>
       <ul>
         {events.map((event) => (
-          <li key={event.id} onClick={() => setEventChoice(event)}>
-            {event.title}
+          <li key={event.id}>
+            <Link to={`event/${event.id}`}>{event.title} </Link>
           </li>
         ))}
       </ul>
