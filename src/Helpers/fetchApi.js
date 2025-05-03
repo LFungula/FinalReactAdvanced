@@ -17,3 +17,14 @@ const fetchEvent = async () => {
   const json = await response.json();
   return json;
 };
+
+const [categories, setCategories] = useState([]);
+
+useEffect(() => {
+  async function fetchCategories() {
+    const response = await fetch(`http://localhost:3000/categories`);
+    const categories = await response.json();
+    setCategories(categories);
+  }
+  fetchCategories();
+}, []);

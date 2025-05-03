@@ -1,4 +1,4 @@
-import { Heading, Image } from "@chakra-ui/react";
+import { Flex, Heading, Image } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
 
 export const loader = async ({ params }) => {
@@ -12,9 +12,9 @@ export const UserPage = () => {
   const { user, events } = useLoaderData();
 
   const eventsByUser = events.filter((event) => event.createdBy === user.id);
-  console.log(eventsByUser);
+
   return (
-    <>
+    <Flex flexDir="column" align="center" w="100%" h="100%">
       <Heading> {user.name} </Heading>
       <Image src={user.image} alt={user.name} />
       <h2>Events by {user.name}:</h2>
@@ -25,6 +25,6 @@ export const UserPage = () => {
           </li>
         ))}
       </ul>
-    </>
+    </Flex>
   );
 };

@@ -1,59 +1,70 @@
-import { Heading } from "@chakra-ui/react";
+import { Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
+import { Time, Date } from "../components/TimeAndDates";
+import { Categories } from "../components/Catagories";
 
 export const loader = async ({ params }) => {
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
   const users = await fetch(`http://localhost:3000/users`);
-  const categories = await fetch(`http://localhost:3000/categories`);
 
   return {
     event: await event.json(),
     users: await users.json(),
-    categories: await categories.json(),
   };
 };
 
+//
+
 export const EventPage = () => {
-  const { event, users, categories } = useLoaderData();
+  const { event, users } = useLoaderData();
 
   const getUserName = () => {
     const user = users.find((user) => user.id === event.createdBy);
     return user ? user.name : "User not registerd";
   };
 
-  const getCategories = () => {
-    const categoryNames = event.categoryIds.map((id) => {
-      const category = categories.find((category) => category.id === id);
-      return category ? category.name : "Category not listed";
-    });
-    return categoryNames;
-  };
-
   const userName = getUserName();
-  const categoryName = getCategories();
 
   return (
-    <>
-      <Heading>{event.title} </Heading>
-      <div>
-        <Link to={`/users/user/${event.createdBy}`}>by {userName}</Link>
-        <img src={event.image} width="25%" />
-        <p>
-          {categoryName.map((name, index) => (
-            <li key={index}>{name} </li>
-          ))}
-        </p>
-        <p> location: {event.location} </p>
-        <p>
-          {" "}
-          from {event.startTime.slice(0, 10)} to {event.endTime.slice(0, 10)}{" "}
-        </p>
-        <p>
-          {" "}
-          from {event.startTime.slice(11, 16)} to {event.endTime.slice(11, 16)}{" "}
-        </p>
-        <p> {event.description} </p>{" "}
-      </div>
-    </>
+    <Flex
+      className="eventpage_Main"
+      flexDir="column"
+      align="center"
+      maxW="100%"
+      gap="2"
+    >
+      <Flex
+        className="eventpage_heading"
+        flexDir="column"
+        wrap="wrap"
+        justify="center"
+        align="center"
+      >
+        <Heading>{event.title} </Heading>{" "}
+        <Heading w="100%" align="center" size="md">
+          <Link to={`/users/user/${event.createdBy}`}>by {userName}</Link>
+        </Heading>
+      </Flex>
+      <Flex className="eventpage_body" flexDir="column" align="center" m="2">
+        <Image
+          src={event.image}
+          alt={event.title}
+          border="2px solid pink"
+          borderRadius="lg"
+          m="2"
+        />
+        <Flex
+          className="eventpage_info"
+          flexDir="column"
+          wrap="wrap"
+          justify="center"
+        ></Flex>
+        <Text> location: {event.location} </Text>
+        <Categories categoryIds={event.categoryIds} />
+        <Date start={event.startTime} end={event.endTime} />
+        <Time start={event.startTime} end={event.endTime} />
+        <Text> {event.description} </Text>
+      </Flex>
+    </Flex>
   );
 };

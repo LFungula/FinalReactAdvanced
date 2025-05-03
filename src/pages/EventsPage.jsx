@@ -1,5 +1,6 @@
-import { Heading } from "@chakra-ui/react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Flex, Heading } from "@chakra-ui/react";
+import { useLoaderData } from "react-router-dom";
+import { EventCard } from "../components/EventCard";
 
 export const loader = async () => {
   const response = await fetch("http://localhost:3000/events");
@@ -10,15 +11,22 @@ export const EventsPage = () => {
   const { events } = useLoaderData();
 
   return (
-    <>
-      <Heading>List of events</Heading>
-      <ul>
+    <Flex flexDir="column" align="center" maxW="100%">
+      <Heading p="2">List of events</Heading>
+      <Flex
+        flexDir="column"
+        justify="center"
+        align="center"
+        maxW="100%"
+        wrap="wrap"
+        gap="2"
+        scrollBehavior="smooth"
+        overflowY="scroll"
+      >
         {events.map((event) => (
-          <li key={event.id}>
-            <Link to={`event/${event.id}`}>{event.title} </Link>
-          </li>
+          <EventCard key={event.id} event={event} />
         ))}
-      </ul>
-    </>
+      </Flex>
+    </Flex>
   );
 };

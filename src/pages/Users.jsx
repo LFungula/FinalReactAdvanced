@@ -1,4 +1,4 @@
-import { Heading } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
 
 export const loader = async () => {
@@ -10,7 +10,7 @@ export const Users = () => {
   const { users } = useLoaderData();
 
   return (
-    <>
+    <Flex flexDir="column" align="center" w="100%" h="100%">
       <Heading> Users </Heading>
       <ul>
         {users.map((user) => (
@@ -19,6 +19,6 @@ export const Users = () => {
           </li>
         ))}
       </ul>
-    </>
+    </Flex>
   );
 };
