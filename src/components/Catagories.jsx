@@ -15,8 +15,8 @@ export const Categories = (categoryIds) => {
     fetchCategories();
   }, []);
 
-  console.log(event);
-  console.log(categories);
+  //  console.log(event);
+  //  console.log(categories);
 
   const getCategories = () => {
     const categoryNames = event.categoryIds.map((id) => {

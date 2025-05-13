@@ -7,7 +7,6 @@ import { AddNewEventPage } from "./pages/AddNewEventPage";
 import { Users, loader as usersLoader } from "./pages/Users";
 import { UserPage, loader as userPageLoader } from "./pages/UserPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import { Root } from "./components/Root";
 
 const router = createBrowserRouter([

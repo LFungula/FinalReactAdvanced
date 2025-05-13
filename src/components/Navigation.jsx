@@ -4,15 +4,36 @@ import { Link } from "react-router-dom";
 
 export const Navigation = () => {
   return (
-    <Flex justify="space-around" p="2" bg="green.100">
-      <Tag size="md" p="2" colorScheme="blue" variant="solid">
+    <Flex justify="space-evenly" p="4" bg="green.100" align="center">
+      <Tag
+        size="md"
+        p="2"
+        colorScheme="blue"
+        variant="solid"
+        maxW="25%"
+        align="center"
+      >
         <Link to="/">Events</Link>
       </Tag>
-      <Tag size="md" p="2" colorScheme="blue" variant="solid">
+      <Tag
+        size="md"
+        p="2"
+        colorScheme="blue"
+        variant="solid"
+        maxW="25%"
+        align="center"
+      >
         <Link to="/event/new">Add a new event</Link>
       </Tag>
-      <Tag size="md" p="2" colorScheme="blue" variant="solid">
-        <Link to="/users">Our registered users</Link>
+      <Tag
+        size="md"
+        p="2"
+        colorScheme="blue"
+        variant="solid"
+        maxW="25%"
+        align="center"
+      >
+        <Link to="/users">Our users</Link>
       </Tag>
     </Flex>
   );

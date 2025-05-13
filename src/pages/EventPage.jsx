@@ -20,7 +20,7 @@ export const EventPage = () => {
 
   const getUserName = () => {
     const user = users.find((user) => user.id === event.createdBy);
-    return user ? user.name : "User not registerd";
+    return user ? user.name : "unregisterd user";
   };
 
   const userName = getUserName();
@@ -39,6 +39,7 @@ export const EventPage = () => {
         wrap="wrap"
         justify="center"
         align="center"
+        h="100%"
       >
         <Heading>{event.title} </Heading>{" "}
         <Heading w="100%" align="center" size="md">
