@@ -1,9 +1,9 @@
 import { Flex, Tag } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-export const CategoryFilter = () => {
+export const CategoryFilter = ({ onSetCategory }) => {
   const [categories, setCategories] = useState([]);
-  const [choosenCategoryFilter, setChoosenCategoryFilter] = useState([]);
+  //  const [choosenCategoryFilter, setChoosenCategoryFilter] = useState("");
 
   useEffect(() => {
     async function fetchCategories() {
@@ -13,7 +13,6 @@ export const CategoryFilter = () => {
     }
     fetchCategories();
   }, []);
-  //console.log(choosenCategoryFilter);
   return (
     <>
       <Flex>
@@ -26,7 +25,7 @@ export const CategoryFilter = () => {
             colorScheme="green"
             size="sm"
             onClick={() => {
-              setChoosenCategoryFilter(category.id);
+              onSetCategory(category.id);
             }}
           >
             {category.name}
