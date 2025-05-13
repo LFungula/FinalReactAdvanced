@@ -32,6 +32,7 @@ export const EventPage = () => {
       align="center"
       maxW="100%"
       gap="2"
+      h="100%"
     >
       <Flex
         className="eventpage_heading"
@@ -43,7 +44,7 @@ export const EventPage = () => {
       >
         <Heading>{event.title} </Heading>{" "}
         <Heading w="100%" align="center" size="md">
-          <Link to={`/users/user/${event.createdBy}`}>by {userName}</Link>
+          <Link to={`/users/${event.createdBy}`}>by {userName}</Link>
         </Heading>
       </Flex>
       <Flex className="eventpage_body" flexDir="column" align="center" m="2">
