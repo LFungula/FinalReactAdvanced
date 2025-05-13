@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         loader: usersLoader,
       },
       {
-        path: "/users/user/:userId",
+        path: "/users/:userId",
         element: <UserPage />,
         loader: userPageLoader,
       },
