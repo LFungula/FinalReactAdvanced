@@ -1,7 +1,7 @@
 import { Flex, Heading } from "@chakra-ui/react";
 //import { useToast } from "@chakra-ui/react";
 import { TermsOfEvents } from "../components/UI/TermsOfEvents";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const AddNewEventPage = () => {
   // Input states
@@ -147,23 +147,25 @@ export const AddNewEventPage = () => {
                 value={endTime}
               ></input>
             </label>
-            {categoriesChecked.map((checkbox, index) => {
-              return (
-                <label>
-                  {checkbox.name}
-                  <input
-                    type="checkbox"
-                    name={checkbox.name}
-                    label={checkbox.name}
-                    id={checkbox.id}
-                    value={checked}
-                    checked={checkboxCategries.checked}
-                    onChange={() => handleCheck(index)}
-                  ></input>
-                </label>
-              );
-            })}
-
+            <label>
+              {categoriesChecked.map((checkbox, index) => {
+                return (
+                  <>
+                    {checkbox.name}
+                    <input
+                      key={checkbox.id}
+                      type="checkbox"
+                      name={checkbox.name}
+                      label={checkbox.name}
+                      id={checkbox.id}
+                      value={checked}
+                      checked={checkboxCategries.checked}
+                      onChange={() => handleCheck(index)}
+                    ></input>
+                  </>
+                );
+              })}
+            </label>
             <label>
               Your name:
               <input
