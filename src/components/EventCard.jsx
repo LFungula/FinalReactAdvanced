@@ -15,14 +15,21 @@ import { Categories } from "./Catagories";
 export const EventCard = ({ event }) => {
   return (
     <LinkBox m="2" maxW="90%" w="sm" h="sm">
-      <Card w="100%" h="100%" alignItems="center" bg="green.100">
-        <LinkOverlay href={`event/${event.id}`}>
+      <Card
+        w="100%"
+        h="100%"
+        align="center"
+        bg="green.100"
+        textAlign="center"
+        p="2"
+      >
+        <LinkOverlay href={`/event/${event.id}`}>
           <CardHeader>
             {" "}
-            <Heading> {event.title}</Heading>{" "}
+            <Heading size="lg"> {event.title}</Heading>{" "}
           </CardHeader>
         </LinkOverlay>
-        <CardBody h="100%" flexDir="column" wrap="wrap" align="center">
+        <CardBody h="100%" flexDir="column" wrap="wrap" align="center" p="2">
           <Image
             src={event.image}
             alt={event.title}
@@ -30,7 +37,7 @@ export const EventCard = ({ event }) => {
             w="80%"
             objectFit="cover"
           />
-          <Flex flexDir="column" scrollBehavior="smooth" overflowY="scroll">
+          <Flex flexDir="column">
             <Flex flexDir="row" justify="center">
               <Categories categoryIds={event.categoryIds} />
             </Flex>

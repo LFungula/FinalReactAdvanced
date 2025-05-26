@@ -61,8 +61,12 @@ export const AddNewEventPage = () => {
   };
 
   //Submitting form
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    //setCategoryIds(
+    // categoriesChecked.find( (categorieChecked.checked === true) return categorieChecked.id    )
+    // );
     setNewEvent({
       createdBy,
       title,
@@ -80,7 +84,8 @@ export const AddNewEventPage = () => {
 
   //Postin net event event
   async function createEvent({ newEvent }) {
-    const response = await fetch("http://localhost:3000/events", {
+    //const response =
+    await fetch("http://localhost:3000/events", {
       method: "POST",
       body: JSON.stringify(newEvent),
       headers: { "Content-Type": "application/json;charset=utf-8" },
@@ -93,96 +98,102 @@ export const AddNewEventPage = () => {
   console.log(availableCategories);
 
   return (
-    <>
+    <Flex
+      className="eventpage_Main"
+      flexDir="column"
+      align="center"
+      maxW="100%"
+      gap="2"
+      h="100%"
+    >
       <TermsOfEvents />
-      <Flex direction="column" p="2" m="2">
-        <Heading> Your new event here!</Heading>
 
-        <Flex direction="column" border="2px solid red">
-          <form onSubmit={handleSubmit}>
-            <label>
-              Title:
-              <input
-                type="text"
-                placeholder="Title of the new event"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-              />
-            </label>
-            <label>
-              Description:
-              <textarea
-                type="Text"
-                placeholder="Describe your event here"
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-                value={description}
-              ></textarea>
-            </label>
-            <label>
-              Location:
-              <input
-                type="Text"
-                placeholder="The location of your event"
-                onChange={(e) => {
-                  setLocation(e.target.value);
-                }}
-                value={location}
-              ></input>
-            </label>
-            <label>
-              Starting Date:
-              <input
-                type="datetime-local"
-                onChange={(e) => setStartTime(e.target.value)}
-                value={startTime}
-              ></input>
-            </label>
-            <label>
-              End Date:
-              <input
-                type="datetime-local"
-                onChange={(e) => setEndTime(e.target.value)}
-                value={endTime}
-              ></input>
-            </label>
-            <label>
-              {categoriesChecked.map((checkbox, index) => {
-                return (
-                  <>
-                    {checkbox.name}
-                    <input
-                      key={checkbox.id}
-                      type="checkbox"
-                      name={checkbox.name}
-                      label={checkbox.name}
-                      id={checkbox.id}
-                      value={checked}
-                      checked={checkboxCategries.checked}
-                      onChange={() => handleCheck(index)}
-                    ></input>
-                  </>
-                );
-              })}
-            </label>
-            <label>
-              Your name:
-              <input
-                type="Text"
-                placeholder="What is your name?"
-                onChange={(e) => {
-                  setCreatedBy(e.target.value);
-                }}
-                value={createdBy}
-              ></input>
-            </label>
-            <label>
-              <input type="submit" value="Submit"></input>
-            </label>
-          </form>
-        </Flex>
+      <Heading> Your new event here!</Heading>
+
+      <Flex direction="column" border="2px solid red" h="full">
+        <form onSubmit={handleSubmit}>
+          <label>
+            Title:
+            <input
+              type="text"
+              placeholder="Title of the new event"
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+            />
+          </label>
+          <label>
+            Description:
+            <textarea
+              type="Text"
+              placeholder="Describe your event here"
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              value={description}
+            ></textarea>
+          </label>
+          <label>
+            Location:
+            <input
+              type="Text"
+              placeholder="The location of your event"
+              onChange={(e) => {
+                setLocation(e.target.value);
+              }}
+              value={location}
+            ></input>
+          </label>
+          <label>
+            Starting Date:
+            <input
+              type="datetime-local"
+              onChange={(e) => setStartTime(e.target.value)}
+              value={startTime}
+            ></input>
+          </label>
+          <label>
+            End Date:
+            <input
+              type="datetime-local"
+              onChange={(e) => setEndTime(e.target.value)}
+              value={endTime}
+            ></input>
+          </label>
+          <label>
+            {categoriesChecked.map((checkbox, index) => {
+              return (
+                <>
+                  {checkbox.name}
+                  <input
+                    key={checkbox.id}
+                    type="checkbox"
+                    name={checkbox.name}
+                    label={checkbox.name}
+                    id={checkbox.id}
+                    //value={checked}
+                    checked={checkboxCategries.checked}
+                    onChange={() => handleCheck(index)}
+                  ></input>
+                </>
+              );
+            })}
+          </label>
+          <label>
+            Your name:
+            <input
+              type="Text"
+              placeholder="What is your name?"
+              onChange={(e) => {
+                setCreatedBy(e.target.value);
+              }}
+              value={createdBy}
+            ></input>
+          </label>
+          <label>
+            <input type="submit" value="Submit"></input>
+          </label>
+        </form>
       </Flex>
-    </>
+    </Flex>
   );
 };

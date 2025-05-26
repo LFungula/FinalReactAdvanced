@@ -11,7 +11,7 @@ export const Users = () => {
   const { users } = useLoaderData();
 
   return (
-    <Flex flexDir="column" align="center" w="100%" h="100%">
+    <Flex flexDir="column" align="center" w="100%" h="full">
       <Heading> Users </Heading>
 
       {users.map((user) => (

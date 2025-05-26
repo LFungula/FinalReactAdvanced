@@ -15,7 +15,6 @@ export const SearchResults = ({ events }) => {
   };
 
   const setCategory = (id) => {
-    //console.log("id in setCategory:", id);
     setCategoryFilter(id);
   };
 
@@ -26,16 +25,12 @@ export const SearchResults = ({ events }) => {
           return event.title.toLowerCase().includes(searchItem.toLowerCase());
         });
 
-  //console.log("searchedResults", searchedResults);
-
   const filteredResults =
     categoryFilter !== ""
       ? searchedResults.filter((event) => {
           return event.categoryIds.includes(categoryFilter);
         })
       : searchedResults;
-
-  //console.log("filteredResults", filteredResults);
 
   return (
     <>
@@ -64,8 +59,6 @@ export const SearchResults = ({ events }) => {
         maxW="100%"
         wrap="wrap"
         gap="2"
-        scrollBehavior="smooth"
-        overflowY="scroll"
       >
         {filteredResults.map((event) => (
           <EventCard key={event.id} event={event} />
