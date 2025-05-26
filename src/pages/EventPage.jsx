@@ -1,4 +1,4 @@
-import { Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
 import { Time, Date } from "../components/TimeAndDates";
 import { Categories } from "../components/Catagories";
