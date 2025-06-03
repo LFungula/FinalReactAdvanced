@@ -14,11 +14,12 @@ export const AddNewEventPage = () => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState("");
 
-  const [newEvent, setNewEvent] = useState([]);
+  const [newEvent, setNewEvent] = useState("");
 
-  //Checkbox stuff
+  // //Checkbox stuff
   const [availableCategories, setAvailableCategories] = useState([]);
-  //load current catagories, maybe, something changed, no hard values.
+
+  //load current categories, maybe something changed, so no hardcodes values.
   useEffect(() => {
     async function fetchCategories() {
       const response = await fetch(`http://localhost:3000/categories`);
@@ -28,24 +29,30 @@ export const AddNewEventPage = () => {
     fetchCategories();
   }, []);
 
-  //creating an new array based on the substracted data, add "checked" key/value, to keep track of individual states
-  const checkboxCategries = [...availableCategories].map((v) => ({
+  //creating an new array based on the substracted data, add "checked" key/value, to keep track of individual states/checks
+  const checkboxCategries = availableCategories.map((v) => ({
     ...v,
     checked: false,
   }));
 
-  // to manage state of the content within the new array
-  const [categoriesChecked, setCategoriesChecked] = useState(checkboxCategries);
+  //listing the choosen categories in a new array by ID
+  const listCategoryIds = () => {
+    const listOfCategoryIds = checkboxCategries
+      .filter((cat) => cat.checked === true)
+      .map((cat) => cat.id);
+    setCategoryIds(listOfCategoryIds);
+  };
 
-  //handeling the ckeckbox's behaviour
-  const handleCheck = (index) => {
-    setCategoriesChecked(
-      categoriesChecked.map((categorieChecked, currectIndex) => {
-        return currectIndex === index
-          ? { ...categorieChecked, checked: !categorieChecked.checked }
-          : categorieChecked;
-      })
-    );
+  //handeling the ckeckbox's behaviour toggeling the chackedvalue
+  const handleCheck = (id) => {
+    const matchID = () => {
+      checkboxCategries.find((c) => {
+        c.id === id ? (c.checked = !c.checked) : c;
+      });
+      return checkboxCategries;
+    };
+    matchID();
+    listCategoryIds();
   };
 
   //CleanUpFunction
@@ -56,7 +63,7 @@ export const AddNewEventPage = () => {
     setStartTime("");
     setEndTime("");
     setImage("");
-    setCategoryIds("");
+    setCategoryIds([""]);
     setCreatedBy("");
   };
 
@@ -64,9 +71,6 @@ export const AddNewEventPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //setCategoryIds(
-    // categoriesChecked.find( (categorieChecked.checked === true) return categorieChecked.id    )
-    // );
     setNewEvent({
       createdBy,
       title,
@@ -79,11 +83,11 @@ export const AddNewEventPage = () => {
     });
     console.log("event was formed");
     console.log(newEvent);
-    createEvent({ newEvent });
+    postEvent({ newEvent });
   };
 
-  //Postin net event event
-  async function createEvent({ newEvent }) {
+  //Posting new  event
+  async function postEvent({ newEvent }) {
     //const response =
     await fetch("http://localhost:3000/events", {
       method: "POST",
@@ -93,9 +97,6 @@ export const AddNewEventPage = () => {
     console.log("event added");
     cleanUp();
   }
-
-  //console.log(checkboxCategries);
-  console.log(availableCategories);
 
   return (
     <Flex
@@ -119,6 +120,7 @@ export const AddNewEventPage = () => {
               placeholder="Title of the new event"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
+              required
             />
           </label>
           <label>
@@ -126,6 +128,7 @@ export const AddNewEventPage = () => {
             <textarea
               type="Text"
               placeholder="Describe your event here"
+              required
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
@@ -141,6 +144,7 @@ export const AddNewEventPage = () => {
                 setLocation(e.target.value);
               }}
               value={location}
+              required
             ></input>
           </label>
           <label>
@@ -149,6 +153,7 @@ export const AddNewEventPage = () => {
               type="datetime-local"
               onChange={(e) => setStartTime(e.target.value)}
               value={startTime}
+              required
             ></input>
           </label>
           <label>
@@ -157,10 +162,11 @@ export const AddNewEventPage = () => {
               type="datetime-local"
               onChange={(e) => setEndTime(e.target.value)}
               value={endTime}
+              required
             ></input>
           </label>
           <label>
-            {categoriesChecked.map((checkbox, index) => {
+            {checkboxCategries.map((checkbox) => {
               return (
                 <>
                   {checkbox.name}
@@ -170,9 +176,9 @@ export const AddNewEventPage = () => {
                     name={checkbox.name}
                     label={checkbox.name}
                     id={checkbox.id}
-                    //value={checked}
+                    value={checkbox.value}
                     checked={checkboxCategries.checked}
-                    onChange={() => handleCheck(index)}
+                    onChange={() => handleCheck(checkbox.id)}
                   ></input>
                 </>
               );
@@ -187,6 +193,7 @@ export const AddNewEventPage = () => {
                 setCreatedBy(e.target.value);
               }}
               value={createdBy}
+              required
             ></input>
           </label>
           <label>
