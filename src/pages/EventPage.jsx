@@ -1,8 +1,7 @@
-import { Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
 import { Time, Date } from "../components/TimeAndDates";
 import { Categories } from "../components/Catagories";
-
 export const loader = async ({ params }) => {
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
   const users = await fetch(`http://localhost:3000/users`);
@@ -66,6 +65,16 @@ export const EventPage = () => {
         <Date start={event.startTime} end={event.endTime} />
         <Time start={event.startTime} end={event.endTime} />
         <Text> {event.description} </Text>
+        <Flex m="2">
+          <Button
+            onClick={() => {
+              window.location.href += "/delete";
+            }}
+          >
+            {" "}
+            Delete this event{" "}
+          </Button>
+        </Flex>
       </Flex>
     </Flex>
   );
