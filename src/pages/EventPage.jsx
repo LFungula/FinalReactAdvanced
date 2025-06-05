@@ -19,7 +19,7 @@ export const EventPage = () => {
 
   const getUserName = () => {
     const user = users.find((user) => user.id === event.createdBy);
-    return user ? user.name : "unregisterd user";
+    return user ? user.name : `${event.createdBy} (unregistered user)`;
   };
 
   const linkUser = () => {
