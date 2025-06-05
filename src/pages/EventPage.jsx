@@ -22,6 +22,19 @@ export const EventPage = () => {
     return user ? user.name : "unregisterd user";
   };
 
+  const linkUser = () => {
+    const user = users.find((user) => user.id === event.createdBy);
+    return user ? (
+      <Heading w="100%" align="center" size="md">
+        <Link to={`/users/${event.createdBy}`}>by {userName}</Link>
+      </Heading>
+    ) : (
+      <Heading w="100%" align="center" size="md">
+        by {userName}
+      </Heading>
+    );
+  };
+
   const userName = getUserName();
 
   return (
@@ -41,16 +54,8 @@ export const EventPage = () => {
         align="center"
         h="100%"
       >
-        <Heading>{event.title} </Heading>{" "}
-        {typeof event.createdBy === "number" ? (
-          <Heading w="100%" align="center" size="md">
-            <Link to={`/users/${event.createdBy}`}>by {userName}</Link>
-          </Heading>
-        ) : (
-          <Heading w="100%" align="center" size="md">
-            by {userName}
-          </Heading>
-        )}
+        <Heading>{event.title} </Heading>
+        {linkUser()}
       </Flex>
       <Flex className="eventpage_body" flexDir="column" align="center" m="2">
         <Image
