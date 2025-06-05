@@ -2,6 +2,7 @@ import { Flex, Heading } from "@chakra-ui/react";
 //import { useToast } from "@chakra-ui/react";
 import { TermsOfEvents } from "../components/UI/TermsOfEvents";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AddNewEventPage = () => {
   // Input states
@@ -15,6 +16,7 @@ export const AddNewEventPage = () => {
   const [createdBy, setCreatedBy] = useState("");
 
   // //Checkbox stuff
+  //make state to save categories in
   const [availableCategories, setAvailableCategories] = useState([]);
 
   //load current categories, maybe something changed, so no hardcodes values.
@@ -53,6 +55,11 @@ export const AddNewEventPage = () => {
     listCategoryIds();
   };
 
+  //Clean Checkboxes
+  const cleanCheckboxes = () => {
+    checkboxCategries.map((c) => (c.checked = false));
+  };
+
   //CleanUpFunction
   const cleanUp = () => {
     setTitle("");
@@ -63,15 +70,7 @@ export const AddNewEventPage = () => {
     setImage("");
     setCategoryIds([""]);
     setCreatedBy("");
-  };
-
-  //Submitting form
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    //modal met checks 1 van de checkboxjes moet gebruikt worden
-
-    postEvent();
+    cleanCheckboxes();
   };
 
   //Posting new  event
@@ -93,6 +92,23 @@ export const AddNewEventPage = () => {
     console.log("event added");
     cleanUp();
   }
+
+  //closing window
+  const navigate = useNavigate();
+  const confirmAdd = () => {
+    window.alert("New event is added. You will return to teh homepage");
+    navigate("/");
+  };
+
+  //Submitting form and warpping up
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    //modal met checks 1 van de checkboxjes moet gebruikt worden
+
+    postEvent();
+    confirmAdd();
+  };
 
   return (
     <Flex
