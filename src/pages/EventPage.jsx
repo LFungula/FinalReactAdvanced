@@ -42,9 +42,15 @@ export const EventPage = () => {
         h="100%"
       >
         <Heading>{event.title} </Heading>{" "}
-        <Heading w="100%" align="center" size="md">
-          <Link to={`/users/${event.createdBy}`}>by {userName}</Link>
-        </Heading>
+        {typeof event.createdBy === "number" ? (
+          <Heading w="100%" align="center" size="md">
+            <Link to={`/users/${event.createdBy}`}>by {userName}</Link>
+          </Heading>
+        ) : (
+          <Heading w="100%" align="center" size="md">
+            by {userName}
+          </Heading>
+        )}
       </Flex>
       <Flex className="eventpage_body" flexDir="column" align="center" m="2">
         <Image
