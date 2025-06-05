@@ -3,6 +3,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { EventPage, loader as eventPageLoader } from "./pages/EventPage";
 import { EventsPage, loader as eventsPageLoader } from "./pages/EventsPage";
+import {
+  DeleteEventPage,
+  loader as deleteEventLoader,
+} from "./pages/DeleteEventPage";
 import { AddNewEventPage } from "./pages/AddNewEventPage";
 import { Users, loader as usersLoader } from "./pages/Users";
 import { UserPage, loader as userPageLoader } from "./pages/UserPage";
@@ -24,6 +28,11 @@ const router = createBrowserRouter([
         path: "/event/:eventId",
         element: <EventPage />,
         loader: eventPageLoader,
+      },
+      {
+        path: "/event/:eventId/delete",
+        element: <DeleteEventPage />,
+        loader: deleteEventLoader,
       },
       {
         path: "/event/new",

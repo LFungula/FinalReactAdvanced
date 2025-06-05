@@ -14,8 +14,6 @@ export const AddNewEventPage = () => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState("");
 
-  const [newEvent, setNewEvent] = useState("");
-
   // //Checkbox stuff
   const [availableCategories, setAvailableCategories] = useState([]);
 
@@ -71,27 +69,25 @@ export const AddNewEventPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setNewEvent({
-      createdBy,
-      title,
-      description,
-      image,
-      categoryIds,
-      location,
-      startTime,
-      endTime,
-    });
-    console.log("event was formed");
-    console.log(newEvent);
-    postEvent({ newEvent });
+    //modal met checks 1 van de checkboxjes moet gebruikt worden
+
+    postEvent();
   };
 
   //Posting new  event
-  async function postEvent({ newEvent }) {
-    //const response =
+  async function postEvent() {
     await fetch("http://localhost:3000/events", {
       method: "POST",
-      body: JSON.stringify(newEvent),
+      body: JSON.stringify({
+        createdBy,
+        title,
+        description,
+        image,
+        categoryIds,
+        location,
+        startTime,
+        endTime,
+      }),
       headers: { "Content-Type": "application/json;charset=utf-8" },
     });
     console.log("event added");
