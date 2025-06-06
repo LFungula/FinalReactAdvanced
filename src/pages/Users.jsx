@@ -1,5 +1,5 @@
 import { Flex, Heading } from "@chakra-ui/react";
-import { Link, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { UserCard } from "../components/Usercard";
 
 export const loader = async () => {

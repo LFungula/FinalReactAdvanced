@@ -12,7 +12,7 @@ export const EventsPage = () => {
   const { events } = useLoaderData();
 
   return (
-    <Flex flexDir="column" align="center" maxW="100%" h="100%">
+    <Flex flexDir="column" align="center" overflowY="scroll" h="100%">
       <Heading p="2">List of events</Heading>
       <SearchResults events={events} />
     </Flex>

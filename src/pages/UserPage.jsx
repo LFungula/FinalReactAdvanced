@@ -1,6 +1,7 @@
 import { Flex, Heading, Image } from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 import { EventCard } from "../components/EventCard";
+import { CustomText } from "../components/UI/CustomText";
 
 export const loader = async ({ params }) => {
   const user = await fetch(`http://localhost:3000/users/${params.userId}`);
@@ -17,20 +18,17 @@ export const UserPage = () => {
   console.log(totalEvents);
 
   return (
-    <Flex flexDir="column" align="center" w="100%" h="full">
+    <Flex flexDir="column" align="center" maxW="100%" wrap="wrap">
       <Heading> {user.name} </Heading>
       <Image
         src={user.image}
         alt={user.name}
         borderRadius="lg"
         boxShadow="sm"
-        w="sm"
         maxW="90%"
         m="2"
       />
-      <h2>
-        Events by {user.name} ({totalEvents}):
-      </h2>
+
       <Flex
         flexDir="column"
         justify="center"
@@ -38,7 +36,11 @@ export const UserPage = () => {
         maxW="100%"
         wrap="wrap"
         gap="2"
+        overflowY="scroll"
       >
+        <CustomText m="2">
+          Events by {user.name} ({totalEvents}):
+        </CustomText>
         {eventsByUser.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}

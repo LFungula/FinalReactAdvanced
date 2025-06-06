@@ -1,7 +1,8 @@
-import { Heading, Text, Button, Flex } from "@chakra-ui/react";
+import { Heading, Button, Flex } from "@chakra-ui/react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { Confirm } from "../components/UI/Confirm";
 import { useState } from "react";
+import { CustomText } from "../components/UI/CustomText";
 
 export const loader = async ({ params }) => {
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
@@ -53,23 +54,27 @@ export const DeleteEventPage = () => {
   const navigate = useNavigate();
 
   const confirmDelete = () => {
-    window.alert("The event is deleted. You will return to teh homepage");
+    window.alert("The event is deleted. You will return to the homepage");
     navigate("/");
   };
 
   return (
     <>
-      <Flex wrap="wrap">
-        <Heading> Warning! You are about to delete an event!</Heading>
-        <Text>
+      <Flex wrap="wrap" justify="center">
+        <Heading textAlign="center" m="2" p="2" color="red">
           {" "}
+          Warning! You are about to delete an event!
+        </Heading>
+        <CustomText>
           You are about to delete the event &quot;{event.title}&quot; by{" "}
           {userName}.
-        </Text>
-        <Text> This action is permanent and can not be undone. </Text>
-        <Text> Are you sure you want to proceed?</Text>
+        </CustomText>
+        <CustomText>This action is permanent and can not be undone.</CustomText>
+        <CustomText> Are you sure you want to proceed?</CustomText>
 
-        <Button onClick={handleIsOpen}>Yes, delete this event</Button>
+        <Button p="2" m="2" colorScheme="red" onClick={handleIsOpen}>
+          Yes, delete this event
+        </Button>
       </Flex>
       <Confirm isOpen={isOpen} onClose={onClose} onYes={onYes} onNo={onNo} />
     </>

@@ -52,14 +52,7 @@ export const SearchResults = ({ events }) => {
           Reset Fiters
         </Tag>
       )}
-      <Flex
-        flexDir="column"
-        justify="center"
-        align="center"
-        maxW="100%"
-        wrap="wrap"
-        gap="2"
-      >
+      <Flex justify="center" wrap="wrap">
         {filteredResults.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}

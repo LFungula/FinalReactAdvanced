@@ -11,7 +11,7 @@ import {
 export const UserCard = ({ user }) => {
   return (
     <LinkBox m="2" maxW="90%" w="sm" h="fit-content">
-      <Card w="100%" h="100%" bg="green.100" justify="center">
+      <Card w="100%" h="100%" bg="seashell" justify="center">
         <LinkOverlay href={`users/${user.id}`}>
           <CardHeader>
             <Flex justify="space-around">

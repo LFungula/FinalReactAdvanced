@@ -37,7 +37,7 @@ export const Categories = (categoryIds) => {
           m="2"
           variant="solid"
           colorScheme="green"
-          size="sm"
+          size="md"
         >
           {" "}
           {name}{" "}

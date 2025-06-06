@@ -1,4 +1,5 @@
 import { Text } from "@chakra-ui/react";
+import { CustomText } from "./UI/CustomText";
 
 export const Date = ({ start, end }) => {
   const beginDate = `${start.slice(8, 10)}-${start.slice(5, 7)}-${start.slice(
@@ -7,13 +8,13 @@ export const Date = ({ start, end }) => {
   )}`;
   const endDate = `${end.slice(8, 10)}-${end.slice(5, 7)}-${end.slice(0, 4)}`;
   if (beginDate === endDate) {
-    return <Text>Date: {beginDate}</Text>;
+    return <CustomText>Date: {beginDate}</CustomText>;
   } else {
     return (
-      <Text>
+      <CustomText>
         Date: From
         {beginDate} to {endDate}
-      </Text>
+      </CustomText>
     );
   }
 };
@@ -22,12 +23,12 @@ export const Time = ({ start, end }) => {
   const startTime = start.slice(11, 16);
   const endTime = end.slice(11, 16);
   if (startTime === endTime) {
-    return <Text>Time: {startTime}</Text>;
+    return <CustomText>Time: {startTime}</CustomText>;
   } else {
     return (
-      <Text>
+      <CustomText>
         Time: From {startTime} hour to {endTime} hour
-      </Text>
+      </CustomText>
     );
   }
 };

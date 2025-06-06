@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const Navigation = () => {
   return (
-    <Flex justify="space-evenly" p="4" bg="green.100" align="center">
+    <Flex justify="space-evenly" p="4" bg="seashell" align="center">
       <Tag
         size="md"
         p="2"

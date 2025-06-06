@@ -1,7 +1,9 @@
-import { Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Image } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
 import { Time, Date } from "../components/TimeAndDates";
 import { Categories } from "../components/Catagories";
+import { CustomText } from "../components/UI/CustomText";
+
 export const loader = async ({ params }) => {
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
   const users = await fetch(`http://localhost:3000/users`);
@@ -52,38 +54,40 @@ export const EventPage = () => {
         wrap="wrap"
         justify="center"
         align="center"
-        h="100%"
+        gap="2"
       >
         <Heading>{event.title} </Heading>
         {linkUser()}
       </Flex>
-      <Flex className="eventpage_body" flexDir="column" align="center" m="2">
+      <Flex
+        className="eventpage_body"
+        flexDir="column"
+        align="center"
+        m="2"
+        gap="2"
+      >
         <Image
           src={event.image}
           alt={event.title}
-          border="2px solid pink"
           borderRadius="lg"
           m="2"
+          maxH="sm"
         />
-        <Flex
-          className="eventpage_info"
-          flexDir="column"
-          wrap="wrap"
-          justify="center"
-        ></Flex>
-        <Text> location: {event.location} </Text>
+        <Flex className="eventpage_info"></Flex>
+        <CustomText> Location: {event.location} </CustomText>
         <Categories categoryIds={event.categoryIds} />
         <Date start={event.startTime} end={event.endTime} />
         <Time start={event.startTime} end={event.endTime} />
-        <Text> {event.description} </Text>
+        <CustomText> {event.description} </CustomText>
         <Flex m="2">
           <Button
+            size="md"
+            colorScheme="blue"
             onClick={() => {
               window.location.href += "/delete";
             }}
           >
-            {" "}
-            Delete this event{" "}
+            Delete this event
           </Button>
         </Flex>
       </Flex>
