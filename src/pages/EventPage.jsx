@@ -1,8 +1,9 @@
-import { Button, Flex, Heading, Image } from "@chakra-ui/react";
+import { Button, Flex, Image } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
 import { Time, Date } from "../components/TimeAndDates";
 import { Categories } from "../components/Catagories";
 import { CustomText } from "../components/UI/CustomText";
+import { CustomHeader } from "../components/UI/CustomHeader";
 
 export const loader = async ({ params }) => {
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
@@ -27,13 +28,11 @@ export const EventPage = () => {
   const linkUser = () => {
     const user = users.find((user) => user.id === event.createdBy);
     return user ? (
-      <Heading w="100%" align="center" size="md">
+      <CustomHeader margin="0">
         <Link to={`/users/${event.createdBy}`}>by {userName}</Link>
-      </Heading>
+      </CustomHeader>
     ) : (
-      <Heading w="100%" align="center" size="md">
-        by {userName}
-      </Heading>
+      <CustomHeader>by {userName}</CustomHeader>
     );
   };
 
@@ -56,7 +55,7 @@ export const EventPage = () => {
         align="center"
         gap="2"
       >
-        <Heading>{event.title} </Heading>
+        <CustomHeader>{event.title} </CustomHeader>
         {linkUser()}
       </Flex>
       <Flex

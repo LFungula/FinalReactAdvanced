@@ -60,17 +60,30 @@ export const DeleteEventPage = () => {
 
   return (
     <>
-      <Flex wrap="wrap" justify="center">
+      <Flex
+        wrap="wrap"
+        justify="center"
+        bg="seashell"
+        direction="column"
+        h="75vh"
+        alignSelf="center"
+        margin="auto"
+      >
         <Heading textAlign="center" m="2" p="2" color="red">
           {" "}
           Warning! You are about to delete an event!
         </Heading>
-        <CustomText>
+        <CustomText fontSize="2xl">
           You are about to delete the event &quot;{event.title}&quot; by{" "}
           {userName}.
         </CustomText>
-        <CustomText>This action is permanent and can not be undone.</CustomText>
-        <CustomText> Are you sure you want to proceed?</CustomText>
+        <CustomText fontSize="2xl">
+          This action is permanent and can not be undone.
+        </CustomText>
+        <CustomText fontSize="2xl">
+          {" "}
+          Are you sure you want to proceed?
+        </CustomText>
 
         <Button p="2" m="2" colorScheme="red" onClick={handleIsOpen}>
           Yes, delete this event

@@ -4,6 +4,7 @@ import { TermsOfEvents } from "../components/UI/TermsOfEvents";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CategorieIsEmpty } from "../components/CategorieIsEmpty";
+import { CustomHeader } from "../components/UI/CustomHeader";
 
 export const AddNewEventPage = () => {
   // Input states
@@ -151,6 +152,7 @@ export const AddNewEventPage = () => {
     margin: "0.5rem",
     borderRadius: "5px",
     backgroundColor: "seashell",
+    fontWeight: "500",
   };
 
   const checkboxLabelStyle = {
@@ -176,9 +178,9 @@ export const AddNewEventPage = () => {
       >
         <TermsOfEvents />
 
-        <Heading> Your new event here!</Heading>
+        <CustomHeader> Your new event here!</CustomHeader>
 
-        <Flex direction="column" h="full" wrap="wrap">
+        <Flex direction="column" h="full" w="90%" wrap="wrap">
           <form onSubmit={handleSubmit} style={formStyle}>
             <label style={labelStyle}>
               Title:
@@ -251,9 +253,15 @@ export const AddNewEventPage = () => {
               ></input>
             </label>
             <label style={checkboxLabelStyle}>
+              <p style={{ fontWeight: "500" }}>Caterory:</p>
               {checkboxCategries.map((checkbox) => {
                 return (
-                  <>
+                  <Flex
+                    key={checkbox.id}
+                    dir={{ base: "column", md: "row" }}
+                    gap="2"
+                    wrap="wrap"
+                  >
                     <p>{checkbox.name}</p>
                     <input
                       key={checkbox.id}
@@ -265,7 +273,7 @@ export const AddNewEventPage = () => {
                       checked={checkboxCategries.checked}
                       onChange={() => handleCheck(checkbox.id)}
                     ></input>
-                  </>
+                  </Flex>
                 );
               })}
             </label>
@@ -283,7 +291,11 @@ export const AddNewEventPage = () => {
               ></input>
             </label>
             <label>
-              <input type="submit" value="Submit" style={buttonStyle}></input>
+              <input
+                type="submit"
+                value="Submit new event"
+                style={buttonStyle}
+              ></input>
             </label>
           </form>
         </Flex>

@@ -18,12 +18,16 @@ export const TermsOfEvents = () => {
   return (
     //These Rules and Regulation were generated with Gemini, they were not thought-up themself. The code, however was built by Lin Fungula.
 
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size={{ base: "md", md: "2xl", lg: "4xl", xl: "6xl" }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader> Before we start! </ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody m="2">
           <Text>
             By closing this message and/or continuing, you aknowledge and accept
             these terms and rules. We advise you read them.
