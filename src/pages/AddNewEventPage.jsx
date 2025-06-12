@@ -124,6 +124,46 @@ export const AddNewEventPage = () => {
     }
   };
 
+  const formStyle = {
+    display: "flex",
+    flexDirection: "column",
+    margin: "0.5rem",
+    padding: "0.5rem",
+    gap: "0.5rem",
+  };
+
+  const buttonStyle = {
+    padding: "0.5rem",
+    margin: "0.5rem",
+    backgroundColor: "blue",
+    color: "#fff",
+    borderRadius: "5px",
+    cursor: "pointer",
+  };
+
+  const inputStyle = {
+    borderRadius: "5px",
+    width: "100%",
+  };
+
+  const labelStyle = {
+    padding: "0.5rem",
+    margin: "0.5rem",
+    borderRadius: "5px",
+    backgroundColor: "seashell",
+  };
+
+  const checkboxLabelStyle = {
+    display: "flex",
+    flexDirection: "row",
+    padding: "0.5rem",
+    margin: "0.5rem",
+    borderRadius: "5px",
+    backgroundColor: "seashell",
+    gap: "0.5rem",
+    justifyContent: "space-between",
+  };
+
   return (
     <>
       <Flex
@@ -138,11 +178,12 @@ export const AddNewEventPage = () => {
 
         <Heading> Your new event here!</Heading>
 
-        <Flex direction="column" border="2px solid red" h="full" wrap="wrap">
-          <form onSubmit={handleSubmit}>
-            <label>
+        <Flex direction="column" h="full" wrap="wrap">
+          <form onSubmit={handleSubmit} style={formStyle}>
+            <label style={labelStyle}>
               Title:
               <input
+                style={inputStyle}
                 type="text"
                 placeholder="Title of the new event"
                 onChange={(e) => setTitle(e.target.value)}
@@ -150,9 +191,10 @@ export const AddNewEventPage = () => {
                 required
               />
             </label>
-            <label>
+            <label style={labelStyle}>
               Description:
               <textarea
+                style={inputStyle}
                 type="Text"
                 placeholder="Describe your event here"
                 required
@@ -162,9 +204,10 @@ export const AddNewEventPage = () => {
                 value={description}
               ></textarea>
             </label>
-            <label>
+            <label style={labelStyle}>
               Link to Image (URL):
               <input
+                style={inputStyle}
                 type="url"
                 required
                 value={image}
@@ -174,9 +217,10 @@ export const AddNewEventPage = () => {
                 }}
               ></input>
             </label>
-            <label>
+            <label style={labelStyle}>
               Location:
               <input
+                style={inputStyle}
                 type="Text"
                 placeholder="The location of your event"
                 onChange={(e) => {
@@ -186,29 +230,31 @@ export const AddNewEventPage = () => {
                 required
               ></input>
             </label>
-            <label>
+            <label style={labelStyle}>
               Starting Date:
               <input
+                style={inputStyle}
                 type="datetime-local"
                 onChange={(e) => setStartTime(e.target.value)}
                 value={startTime}
                 required
               ></input>
             </label>
-            <label>
+            <label style={labelStyle}>
               End Date:
               <input
+                style={inputStyle}
                 type="datetime-local"
                 onChange={(e) => setEndTime(e.target.value)}
                 value={endTime}
                 required
               ></input>
             </label>
-            <label>
+            <label style={checkboxLabelStyle}>
               {checkboxCategries.map((checkbox) => {
                 return (
                   <>
-                    {checkbox.name}
+                    <p>{checkbox.name}</p>
                     <input
                       key={checkbox.id}
                       type="checkbox"
@@ -223,9 +269,10 @@ export const AddNewEventPage = () => {
                 );
               })}
             </label>
-            <label>
+            <label style={labelStyle}>
               Your name:
               <input
+                style={inputStyle}
                 type="Text"
                 placeholder="What is your name?"
                 onChange={(e) => {
@@ -236,7 +283,7 @@ export const AddNewEventPage = () => {
               ></input>
             </label>
             <label>
-              <input type="submit" value="Submit"></input>
+              <input type="submit" value="Submit" style={buttonStyle}></input>
             </label>
           </form>
         </Flex>

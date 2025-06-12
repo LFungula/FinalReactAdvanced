@@ -8,7 +8,7 @@ import unsplash from "../assets/unsplash.jpg";
 export const Root = () => {
   return (
     <Flex
-      bg="yellow.100"
+      bg="seashell"
       direction="column"
       justify="flex-start"
       style={{
