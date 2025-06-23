@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 //import { useToast } from "@chakra-ui/react";
 import { TermsOfEvents } from "../components/UI/TermsOfEvents";
 import { useEffect, useState } from "react";
