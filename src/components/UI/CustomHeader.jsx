@@ -4,7 +4,7 @@ export const CustomHeader = ({ ...props }) => {
   return (
     <Heading
       bg="seashell"
-      width="100vw"
+      width="100%"
       p="2"
       textAlign="center"
       marginTop="4"

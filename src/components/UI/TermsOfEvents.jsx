@@ -17,23 +17,22 @@ export const TermsOfEvents = () => {
 
   return (
     //These Rules and Regulation were generated with Gemini, they were not thought-up themself. The code, however was built by Lin Fungula.
-
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      size={{ base: "md", md: "2xl", lg: "4xl", xl: "6xl" }}
-    >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader> Before we start! </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody m="2">
-          <Text>
-            By closing this message and/or continuing, you aknowledge and accept
-            these terms and rules. We advise you read them.
-          </Text>
-          <Heading>General Guidelines:</Heading>
-          <Text>
+    <>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{ base: "md", md: "2xl", lg: "4xl", xl: "6xl" }}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader> Before we start! </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody m="2">
+            <Text>
+              By closing this message and/or continuing, you aknowledge and
+              accept these terms and rules. We advise you read them.
+            </Text>
+            <Heading>General Guidelines:</Heading>
             <OrderedList>
               <ListItem>
                 <b>Be Accurate and Truthful:</b> All event details (date, time,
@@ -68,9 +67,7 @@ export const TermsOfEvents = () => {
                 and avoid offensive, discriminatory, or inappropriate content.
               </ListItem>
             </OrderedList>
-          </Text>
-          <Heading>Specific Information Requirements:</Heading>
-          <Text>
+            <Heading>Specific Information Requirements:</Heading>
             <OrderedList>
               <ListItem>
                 Clear Event Title: Use a concise and descriptive title that
@@ -122,9 +119,7 @@ export const TermsOfEvents = () => {
                 disabilities.
               </ListItem>
             </OrderedList>
-          </Text>
-          <Heading>Prohibited Content and Activities:</Heading>
-          <Text>
+            <Heading>Prohibited Content and Activities:</Heading>
             <OrderedList>
               <ListItem>
                 Illegal Activities: Do not promote or facilitate any illegal
@@ -150,9 +145,7 @@ export const TermsOfEvents = () => {
                 information (yours or others&apos;) in the event listing.
               </ListItem>
             </OrderedList>
-          </Text>
-          <Heading>Platform Specific Guidelines:</Heading>
-          <Text>
+            <Heading>Platform Specific Guidelines:</Heading>
             <OrderedList>
               <ListItem>
                 Adhere to Platform Terms of Service: All event postings must
@@ -164,15 +157,16 @@ export const TermsOfEvents = () => {
                 formatting requirements or guidelines provided by the platform.
               </ListItem>
             </OrderedList>
-          </Text>
 
-          <Text>
-            These rules aim to create a trustworthy and informative environment
-            for both event organizers and attendees on the online platform. Let
-            me know if you&apos;d like any specific aspects elaborated on!
-          </Text>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+            <Text>
+              These rules aim to create a trustworthy and informative
+              environment for both event organizers and attendees on the online
+              platform. Let me know if you&apos;d like any specific aspects
+              elaborated on!
+            </Text>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
