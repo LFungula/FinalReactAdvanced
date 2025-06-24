@@ -78,15 +78,24 @@ export const EventPage = () => {
         <Date start={event.startTime} end={event.endTime} />
         <Time start={event.startTime} end={event.endTime} />
         <CustomText> {event.description} </CustomText>
-        <Flex m="2">
+        <Flex m="2" gap="2" dir="row">
           <Button
             size="md"
-            colorScheme="blue"
+            colorScheme="red"
             onClick={() => {
               window.location.href += "/delete";
             }}
           >
             Delete this event
+          </Button>
+          <Button
+            size="md"
+            colorScheme="blue"
+            onClick={() => {
+              window.location.href += "/edit";
+            }}
+          >
+            Edit this event
           </Button>
         </Flex>
       </Flex>
