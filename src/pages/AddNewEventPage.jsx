@@ -1,10 +1,17 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Tag, Text } from "@chakra-ui/react";
 //import { useToast } from "@chakra-ui/react";
 import { TermsOfEvents } from "../components/UI/TermsOfEvents";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CategorieIsEmpty } from "../components/CategorieIsEmpty";
 import { CustomHeader } from "../components/UI/CustomHeader";
+import {
+  formStyle,
+  buttonStyle,
+  inputStyle,
+  labelStyle,
+  checkboxLabelStyle,
+} from "../components/UI/EventFormStyling";
 
 export const AddNewEventPage = () => {
   // Input states
@@ -23,6 +30,7 @@ export const AddNewEventPage = () => {
   //make state to save categories in
   const [availableCategories, setAvailableCategories] = useState([]);
   //Controlls modal for checkboxcheck
+
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => {
     setIsOpen(false);
@@ -39,14 +47,14 @@ export const AddNewEventPage = () => {
   }, []);
 
   //creating an new array based on the substracted data, add "checked" key/value, to keep track of individual states/checks
-  const checkboxCategries = availableCategories.map((v) => ({
+  const checkboxCategories = availableCategories.map((v) => ({
     ...v,
     checked: false,
   }));
 
   //listing the choosen categories in a new array by ID
   const listCategoryIds = () => {
-    const listOfCategoryIds = checkboxCategries
+    const listOfCategoryIds = checkboxCategories
       .filter((cat) => cat.checked === true)
       .map((cat) => cat.id);
     setCategoryIds(listOfCategoryIds);
@@ -55,18 +63,19 @@ export const AddNewEventPage = () => {
   //handeling the ckeckbox's behaviour toggeling the chackedvalue
   const handleCheck = (id) => {
     const matchID = () => {
-      checkboxCategries.find((c) => {
+      checkboxCategories.find((c) => {
         c.id === id ? (c.checked = !c.checked) : c;
       });
-      return checkboxCategries;
+      return checkboxCategories;
     };
     matchID();
+    console.log(checkboxCategories);
     listCategoryIds();
   };
 
   //Clean Checkboxes
   const cleanCheckboxes = () => {
-    checkboxCategries.map((c) => (c.checked = false));
+    checkboxCategories.map((c) => (c.checked = false));
   };
 
   //CleanUpFunction
@@ -77,7 +86,7 @@ export const AddNewEventPage = () => {
     setStartTime("");
     setEndTime("");
     setImage("");
-    setCategoryIds([""]);
+    setCategoryIds([]);
     setCreatedBy("");
     cleanCheckboxes();
   };
@@ -116,60 +125,34 @@ export const AddNewEventPage = () => {
   };
 
   //Submitting form and warpping up
+  // const prepData = () => {
+  //   listCategoryIds();
+  // };
+
+  const doChecks = () => {
+    checkIfEmpty();
+  };
+
+  const complete = () => {
+    isComplete === true
+      ? postEvent()
+      : console.log(
+          "Oops! It seems you've forgotten something, check your event and try again"
+        );
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    checkIfEmpty();
-    {
-      isComplete === true ? postEvent() : console.log("data incomplete");
-    }
-  };
 
-  const formStyle = {
-    display: "flex",
-    flexDirection: "column",
-    margin: "0.5rem",
-    padding: "0.5rem",
-    gap: "0.5rem",
-  };
-
-  const buttonStyle = {
-    padding: "0.5rem",
-    margin: "0.5rem",
-    backgroundColor: "blue",
-    color: "#fff",
-    borderRadius: "5px",
-    cursor: "pointer",
-  };
-
-  const inputStyle = {
-    borderRadius: "5px",
-    width: "100%",
-  };
-
-  const labelStyle = {
-    padding: "0.5rem",
-    margin: "0.5rem",
-    borderRadius: "5px",
-    backgroundColor: "seashell",
-    fontWeight: "500",
-  };
-
-  const checkboxLabelStyle = {
-    display: "flex",
-    flexDirection: "row",
-    padding: "0.5rem",
-    margin: "0.5rem",
-    borderRadius: "5px",
-    backgroundColor: "seashell",
-    gap: "0.5rem",
-    justifyContent: "space-between",
+    //prepData();
+    doChecks();
+    complete();
   };
 
   return (
     <>
       <Flex
-        className="eventpage_Main"
+        className="addEventpage_Main"
         flexDir="column"
         align="center"
         maxW="100%"
@@ -183,7 +166,7 @@ export const AddNewEventPage = () => {
         <Flex direction="column" h="full" w="90%" wrap="wrap">
           <form onSubmit={handleSubmit} style={formStyle}>
             <label style={labelStyle}>
-              Title:
+              <Text>Title:</Text>
               <input
                 style={inputStyle}
                 type="text"
@@ -194,7 +177,7 @@ export const AddNewEventPage = () => {
               />
             </label>
             <label style={labelStyle}>
-              Description:
+              <Text>Description:</Text>
               <textarea
                 style={inputStyle}
                 type="Text"
@@ -207,7 +190,7 @@ export const AddNewEventPage = () => {
               ></textarea>
             </label>
             <label style={labelStyle}>
-              Link to Image (URL):
+              <Text>Link to Image (URL):</Text>
               <input
                 style={inputStyle}
                 type="url"
@@ -220,7 +203,7 @@ export const AddNewEventPage = () => {
               ></input>
             </label>
             <label style={labelStyle}>
-              Location:
+              <Text>Location:</Text>
               <input
                 style={inputStyle}
                 type="Text"
@@ -233,7 +216,7 @@ export const AddNewEventPage = () => {
               ></input>
             </label>
             <label style={labelStyle}>
-              Starting Date:
+              <Text>Starting date and time:</Text>
               <input
                 style={inputStyle}
                 type="datetime-local"
@@ -243,7 +226,7 @@ export const AddNewEventPage = () => {
               ></input>
             </label>
             <label style={labelStyle}>
-              End Date:
+              <Text>End date and time:</Text>
               <input
                 style={inputStyle}
                 type="datetime-local"
@@ -252,33 +235,45 @@ export const AddNewEventPage = () => {
                 required
               ></input>
             </label>
-            <label style={checkboxLabelStyle}>
-              <p style={{ fontWeight: "500" }}>Caterory:</p>
-              {checkboxCategries.map((checkbox) => {
-                return (
-                  <Flex
-                    key={checkbox.id}
-                    dir={{ base: "column", md: "row" }}
-                    gap="2"
-                    wrap="wrap"
-                  >
-                    <p>{checkbox.name}</p>
-                    <input
+
+            <label style={checkboxLabelStyle} display="flex" direction="column">
+              <Text style={{ fontWeight: "500" }}>Update caterory to:</Text>
+              <Flex gap="0.5rem" justify="space-between">
+                {checkboxCategories.map((checkbox) => {
+                  return (
+                    <Flex
                       key={checkbox.id}
-                      type="checkbox"
-                      name={checkbox.name}
-                      label={checkbox.name}
-                      id={checkbox.id}
-                      value={checkbox.value}
-                      checked={checkboxCategries.checked}
-                      onChange={() => handleCheck(checkbox.id)}
-                    ></input>
-                  </Flex>
-                );
-              })}
+                      flexDirection="row"
+                      gap="2"
+                      wrap="wrap"
+                      justify="space-between"
+                    >
+                      <Tag
+                        p="2"
+                        m="2"
+                        variant="solid"
+                        colorScheme="green"
+                        size="md"
+                      >
+                        {checkbox.name}
+                      </Tag>
+                      <input
+                        key={checkbox.id}
+                        type="checkbox"
+                        name={checkbox.name}
+                        label={checkbox.name}
+                        id={checkbox.id}
+                        value={checkbox.value}
+                        checked={checkboxCategories.checked}
+                        onChange={() => handleCheck(checkbox.id)}
+                      ></input>
+                    </Flex>
+                  );
+                })}
+              </Flex>
             </label>
             <label style={labelStyle}>
-              Your name:
+              <Text>Your name:</Text>
               <input
                 style={inputStyle}
                 type="Text"
