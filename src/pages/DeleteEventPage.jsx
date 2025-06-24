@@ -58,6 +58,8 @@ export const DeleteEventPage = () => {
     navigate("/");
   };
 
+  const goBack = () => navigate(-1);
+
   return (
     <>
       <Flex
@@ -65,12 +67,12 @@ export const DeleteEventPage = () => {
         justify="center"
         bg="seashell"
         direction="column"
-        h="75vh"
-        alignSelf="center"
+        alignItems="center"
         margin="auto"
+        w="90%"
+        p="2"
       >
         <Heading textAlign="center" m="2" p="2" color="red">
-          {" "}
           Warning! You are about to delete an event!
         </Heading>
         <CustomText fontSize="2xl">
@@ -84,7 +86,9 @@ export const DeleteEventPage = () => {
           {" "}
           Are you sure you want to proceed?
         </CustomText>
-
+        <Button p="2" m="2" colorScheme="blue" onClick={goBack}>
+          No! Go back to the event
+        </Button>
         <Button p="2" m="2" colorScheme="red" onClick={handleIsOpen}>
           Yes, delete this event
         </Button>
