@@ -2,7 +2,6 @@ import { Flex, Tag, Text } from "@chakra-ui/react";
 //import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
-import { CategorieIsEmpty } from "../components/CategorieIsEmpty";
 import { CustomHeader } from "../components/UI/CustomHeader";
 import { Categories } from "../components/Catagories";
 import {
@@ -34,8 +33,6 @@ export const EditEventPage = () => {
 
   const ogEvent = { ...event };
 
-  const ogUserName = JSON.parse(JSON.stringify(userName));
-
   // Input states
 
   const [title, setTitle] = useState(ogEvent.title);
@@ -45,19 +42,14 @@ export const EditEventPage = () => {
   const [endTime, setEndTime] = useState(ogEvent.endTime);
   const [image, setImage] = useState(ogEvent.image);
   const [categoryIds, setCategoryIds] = useState(ogEvent.categoryIds);
-  const [createdBy, setCreatedBy] = useState(ogUserName);
+  const [createdBy, setCreatedBy] = useState(ogEvent.createdBy);
 
-  const [isComplete, setIsComplete] = useState(false);
+  //const [isComplete, setIsComplete] = useState(false);
 
   // //Checkbox stuff
   //make state to save categories in
   const [availableCategories, setAvailableCategories] = useState([]);
   //Controlls modal for checkboxcheck
-
-  const [isOpen, setIsOpen] = useState(false);
-  const onClose = () => {
-    setIsOpen(false);
-  };
 
   //load current categories, maybe something changed, so no hardcodes values.
   useEffect(() => {
@@ -97,16 +89,12 @@ export const EditEventPage = () => {
   };
 
   //Check if nothing is empty
-  const checkIfEmpty = () => {
-    categoryIds.length === 0 ? setIsOpen(true) : setIsComplete(true);
-  };
 
   //Editing event
   async function editEvent() {
     await fetch(`http://localhost:3000/events/${event.id}`, {
       method: "PUT",
       body: JSON.stringify({
-        createdBy,
         title,
         description,
         image,
@@ -114,6 +102,7 @@ export const EditEventPage = () => {
         location,
         startTime,
         endTime,
+        createdBy,
       }),
       headers: { "Content-Type": "application/json;charset=utf-8" },
     });
@@ -129,34 +118,11 @@ export const EditEventPage = () => {
   };
 
   //Submitting form and warpping up
-  const prepData = () => {
-    listCategoryIds();
-    getUserId(createdBy);
-  };
-
-  const doChecks = () => {
-    checkIfEmpty();
-  };
-
-  const complete = () => {
-    isComplete === true
-      ? editEvent()
-      : console.log(
-          "Oops! It seems you've forgotten something, check your event and try again"
-        );
-  };
 
   const handleSubmit = (editedEvent) => {
     editedEvent.preventDefault();
-
-    prepData();
-    doChecks();
-    complete();
-  };
-
-  const getUserId = () => {
-    const userId = users.find((user) => user.name === createdBy);
-    userId ? setCreatedBy(userId) : setCreatedBy(createdBy);
+    listCategoryIds();
+    editEvent();
   };
 
   return (
@@ -170,6 +136,9 @@ export const EditEventPage = () => {
         h="100%"
       >
         <CustomHeader> Event editor </CustomHeader>
+        <Text style={labelStyle}>
+          {ogEvent.title} by {userName}
+        </Text>
 
         <Flex direction="column" h="full" w="90%" wrap="wrap">
           <form onSubmit={handleSubmit} style={formStyle}>
@@ -269,7 +238,11 @@ export const EditEventPage = () => {
               <Flex direction="row" gap="0.5rem" justify="flex-start">
                 <Text style={{ fontWeight: "500" }}>Current categories:</Text>
                 <Categories categoryIds={ogEvent.categoryIds}></Categories>
-              </Flex>
+              </Flex>{" "}
+              <Text>
+                {" "}
+                If you change nothing, the categories will remain the same.{" "}
+              </Text>
               <Text style={{ fontWeight: "500" }}>Update caterory to:</Text>
               <Flex gap="0.5rem" justify="space-between">
                 {checkboxCategories.map((checkbox) => {
@@ -299,22 +272,6 @@ export const EditEventPage = () => {
                 })}
               </Flex>
             </label>
-
-            <label style={labelStyle}>
-              <Text>Current creator:</Text>
-              <Text fontSize="larger">{ogUserName}</Text>
-              <Text>Update creator to:</Text>
-              <input
-                style={inputStyle}
-                type="Text"
-                placeholder={ogUserName}
-                onChange={(e) => {
-                  getUserId(e.target.value);
-                }}
-                value={createdBy}
-                required
-              ></input>
-            </label>
             <label>
               <input
                 type="submit"
@@ -325,8 +282,6 @@ export const EditEventPage = () => {
           </form>
         </Flex>
       </Flex>
-
-      <CategorieIsEmpty isOpen={isOpen} onClose={onClose} />
     </>
   );
 };
