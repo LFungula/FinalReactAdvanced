@@ -24,8 +24,6 @@ export const AddNewEventPage = () => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState("");
 
-  const [isComplete, setIsComplete] = useState(false);
-
   // //Checkbox stuff
   //make state to save categories in
   const [availableCategories, setAvailableCategories] = useState([]);
@@ -92,9 +90,7 @@ export const AddNewEventPage = () => {
   };
 
   //Check if nothing is empty
-  const checkIfEmpty = () => {
-    categoryIds.length === 0 ? setIsOpen(true) : setIsComplete(true);
-  };
+  const checkIfEmpty = () => {};
 
   //Posting new  event
   async function postEvent() {
@@ -120,33 +116,20 @@ export const AddNewEventPage = () => {
   //closing window
   const navigate = useNavigate();
   const confirmAdd = () => {
-    window.alert("New event is added. You will return to teh homepage");
+    window.alert("New event is added. You will return to the homepage");
     navigate("/");
   };
 
-  //Submitting form and warpping up
-  // const prepData = () => {
-  //   listCategoryIds();
-  // };
+  const handleSubmit = (event) => {
+    let isComplete = false;
 
-  const doChecks = () => {
-    checkIfEmpty();
-  };
-
-  const complete = () => {
+    event.preventDefault();
+    categoryIds.length === 0 ? setIsOpen(true) : (isComplete = true);
     isComplete === true
       ? postEvent()
       : console.log(
           "Oops! It seems you've forgotten something, check your event and try again"
         );
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    //prepData();
-    doChecks();
-    complete();
   };
 
   return (
