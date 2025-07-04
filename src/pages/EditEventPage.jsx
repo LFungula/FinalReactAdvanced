@@ -48,47 +48,40 @@ export const EditEventPage = () => {
 
   // //Checkbox stuff
   //make state to save categories in
-  const [availableCategories, setAvailableCategories] = useState([]);
-  //Controlls modal for checkboxcheck
+  const [allCategories, setAllCategories] = useState([]);
 
   //load current categories, maybe something changed, so no hardcodes values.
   useEffect(() => {
     async function fetchCategories() {
       const response = await fetch(`http://localhost:3000/categories`);
       const categories = await response.json();
-      setAvailableCategories(categories);
+      setAllCategories(categories);
     }
     fetchCategories();
   }, []);
 
-  //creating an new array based on the substracted data, add "checked" key/value, to keep track of individual states/checks
-  const checkboxCategories = availableCategories.map((v) => ({
-    ...v,
-    checked: false,
-  }));
+  const handleCheck = (checkboxID) => {
+    setCategoryIds((prev) => {
+      if (prev.includes(checkboxID)) {
+        const updated = prev.filter((id) => {
+          const keep = id !== checkboxID;
+          console.log(`Filtering id=${id}, keep=${keep}`);
+          return keep;
+        });
+        console.log(`${checkboxID} is weg. categoryIds update:`, updated);
+        return updated;
+      } else {
+        const updated = [...prev, checkboxID];
+        console.log(
+          `${checkboxID} is toegevoegd. Updated categoryIds:`,
+          updated
+        );
+        return updated;
+      }
+    });
 
-  //handeling the ckeckbox's behaviour toggeling the chackedvalue
-  const handleCheck = (id) => {
-    const matchID = () => {
-      checkboxCategories.find((c) => {
-        c.id === id ? (c.checked = !c.checked) : c;
-      });
-      return checkboxCategories;
-    };
-    matchID();
-    console.log(checkboxCategories);
+    console.log("categoryIds afterupdate ", categoryIds);
   };
-
-  //listing the choosen categories in a new array by ID
-  const listCategoryIds = () => {
-    const listOfCategoryIds = checkboxCategories
-      .filter((c) => c.checked === true)
-      .map((c) => c.id);
-    console.log(listOfCategoryIds);
-    setCategoryIds(listOfCategoryIds);
-  };
-
-  //Check if nothing is empty
 
   //Editing event
   async function editEvent() {
@@ -121,7 +114,7 @@ export const EditEventPage = () => {
 
   const handleSubmit = (editedEvent) => {
     editedEvent.preventDefault();
-    listCategoryIds();
+    console.log("categoryIds afterupdate ", categoryIds);
     editEvent();
   };
 
@@ -245,9 +238,9 @@ export const EditEventPage = () => {
               </Text>
               <Text style={{ fontWeight: "500" }}>Update caterory to:</Text>
               <Flex gap="0.5rem" justify="space-between">
-                {checkboxCategories.map((checkbox) => {
+                {allCategories.map((singleCategory) => {
                   return (
-                    <Flex key={checkbox.id} dir="row" gap="2" wrap="wrap">
+                    <Flex key={singleCategory.id} dir="row" gap="2" wrap="wrap">
                       <Tag
                         p="2"
                         m="2"
@@ -255,17 +248,17 @@ export const EditEventPage = () => {
                         colorScheme="green"
                         size="md"
                       >
-                        {checkbox.name}
+                        {singleCategory.name}
                       </Tag>
                       <input
-                        key={checkbox.id}
+                        key={singleCategory.id}
                         type="checkbox"
-                        name={checkbox.name}
-                        label={checkbox.name}
-                        id={checkbox.id}
-                        value={checkbox.value}
-                        checked={checkboxCategories.checked}
-                        onChange={() => handleCheck(checkbox.id)}
+                        name={singleCategory.name}
+                        label={singleCategory.name}
+                        id={singleCategory.id}
+                        value={singleCategory.value}
+                        checked={categoryIds.includes(singleCategory.id)}
+                        onChange={() => handleCheck(singleCategory.id)}
                       ></input>
                     </Flex>
                   );
